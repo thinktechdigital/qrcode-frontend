@@ -1,16 +1,66 @@
-# React + Vite
+# QR & Barcode Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite frontend for the QR/Barcode system.
 
-Currently, two official plugins are available:
+## Tech Stack
+- React 19
+- React Router
+- Vite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- User/Admin login flow
+- QR code generator
+  - URL
+  - Text
+  - Contact Card (vCard) with live phone preview
+  - PDF link with live phone preview
+- Barcode generator
+- My Codes listing and management
+- Admin analytics and user management
+- Public pages:
+  - `/c/:slug` (public vCard)
+  - `/p/:slug` (public PDF landing page)
 
-## React Compiler
+## Prerequisites
+- Node.js 18+
+- npm 9+
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## Environment Variables
+Create `Frontend/.env`:
 
-## Expanding the ESLint configuration
+```env
+VITE_API_URL=http://localhost:8000
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Install
+```bash
+cd Frontend
+npm install
+```
+
+## Run (Development)
+```bash
+npm run dev
+```
+
+Default local URL: `http://localhost:5173`
+
+## Build
+```bash
+npm run build
+```
+
+## Preview Production Build
+```bash
+npm run preview
+```
+
+## Lint
+```bash
+npm run lint
+```
+
+## Deployment Notes
+- Set `VITE_API_URL` to the deployed backend URL.
+- Ensure backend CORS allows your frontend domain in production.
+- Do not commit `.env` files.
