@@ -1,0 +1,132 @@
+.mycodes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.mycodes-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.mycodes-header-subtitle{
+  padding-bottom: 30px;
+}
+
+
+
+.work-page h1 {
+  margin: 0;
+  font-size: 30px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #141a2a;
+}
+
+.mycodes-header-btn {
+  height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 5px;
+  background: #0076c9;
+  color: #ffffff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  outline: none;
+  box-shadow: none;
+}
+
+
+.mycodes-header-btn-secondary {
+  height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #0076c9;
+  border: 1px solid #0076c9;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  outline: none;
+  box-shadow: none;
+}
+
+.mycodes-header-btn-secondary:hover {
+  background: #ffffff;
+  border-color: #0076c9;
+}
+
+
+
+.mycodes-header-btn:focus,
+.mycodes-header-btn:focus-visible,
+.mycodes-header-btn:active,
+.mycodes-header-btn-secondary:focus,
+.mycodes-header-btn-secondary:focus-visible,
+.mycodes-header-btn-secondary:active {
+  outline: none;
+  box-shadow: none;
+  border-color: #0076c9;
+}
+
+.work-page p {
+  margin: 8px 0 18px;
+  color: #677083;
+  font-size: 15px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.work-card {
+  background: #ffffff;
+  border: 1px solid #e7e9ef;
+  border-radius: 12px;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a93a7;
+  font-size: 16px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+@media (max-width: 640px) {
+  .mycodes-header {
+    flex-wrap: wrap;
+  }
+
+  .mycodes-header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+
+.mycodes-header-btn .iconstopbtn {
+  width: 20px;
+  height: 20px;
+  filter: brightness(1) invert(1) !important;
+  display: block;
+  flex: 0 0 auto;
+}
+
+.mycodes-header-btn-secondary .iconstopbtn {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) saturate(100%) invert(32%) sepia(98%) saturate(1687%) hue-rotate(184deg) brightness(91%) contrast(101%);
+  display: block;
+  flex: 0 0 auto;
+}

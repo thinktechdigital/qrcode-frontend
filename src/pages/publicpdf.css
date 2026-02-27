@@ -1,0 +1,146 @@
+.public-pdf-page {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #f8fafc;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #0f172a;
+  display: block;
+}
+
+.public-pdf-card {
+  width: 100%;
+  max-width: 680px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+}
+
+.public-pdf-hero {
+  background: var(--accent, #58c2db);
+  color: #ffffff;
+  text-align: center;
+  padding: 34px 22px 92px;
+  position: relative;
+}
+
+.public-pdf-company {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.public-pdf-hero h1 {
+  margin: 8px 0 0;
+  font-size: 42px;
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.public-pdf-description {
+  margin: 16px auto 0;
+  max-width: 320px;
+  font-size: 16px;
+  line-height: 1.45;
+  opacity: 0.98;
+}
+
+.public-pdf-body {
+  position: relative;
+  margin-top: -58px;
+  padding: 0 16px 22px;
+}
+
+.public-pdf-image-wrap {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.1);
+}
+
+.public-pdf-image {
+  display: block;
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.public-pdf-button {
+  margin-top: 12px;
+  width: 100%;
+  height: 52px;
+  border-radius: 8px;
+  background: var(--accent, #58c2db);
+  color: #ffffff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 600;
+  gap: 10px;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.public-pdf-button-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.public-pdf-button-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.public-pdf-button:hover,
+.public-pdf-button:focus-visible {
+  background: var(--accent, #58c2db);
+  color: #ffffff;
+  outline: none;
+}
+
+.public-pdf-website {
+  display: inline-block;
+  margin-top: 12px;
+  color: #0f172a;
+  text-decoration: none;
+  word-break: break-word;
+  font-size: 13px;
+}
+
+@media (max-width: 520px) {
+  .public-pdf-card {
+    max-width: 100%;
+    min-height: 100vh;
+    border-radius: 0;
+  }
+
+  .public-pdf-hero {
+    padding: 28px 18px 84px;
+  }
+
+  .public-pdf-company {
+    font-size: 18px;
+  }
+
+  .public-pdf-hero h1 {
+    font-size: 34px;
+  }
+
+  .public-pdf-description {
+    font-size: 14px;
+  }
+
+  .public-pdf-button {
+    height: 46px;
+    font-size: 20px;
+  }
+}

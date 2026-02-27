@@ -1,0 +1,251 @@
+.barcode-page {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.barcode-page-title {
+  margin: 0;
+  font-size: 25px;
+  color: #0f172a;
+}
+
+.barcode-page-subtitle {
+  margin: 8px 0 18px;
+  color: #667085;
+  font-size: 15px;
+  padding-bottom: 20px;
+}
+
+.barcode-builder {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 20px;
+  align-items: start;
+}
+
+.barcode-panel {
+  background: rgba(255, 255, 255, 0);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.barcode-controls {
+  padding-left: 0;
+}
+
+.barcode-controls h2 {
+  margin: 0 0 14px;
+  font-size: 18px;
+  color: #111827;
+}
+
+.barcode-controls label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.barcode-controls textarea,
+.barcode-controls input,
+.barcode-controls select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d7deea;
+  border-radius: 10px;
+  padding: 10px 11px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 15px;
+  color: #111827;
+  background: #ffffff;
+}
+
+.barcode-controls textarea:focus,
+.barcode-controls input:focus,
+.barcode-controls select:focus,
+.barcode-controls textarea:focus-visible,
+.barcode-controls input:focus-visible,
+.barcode-controls select:focus-visible,
+.barcode-controls textarea:active,
+.barcode-controls input:active,
+.barcode-controls select:active {
+  outline: none;
+  box-shadow: none;
+  border-color: #d7deea;
+}
+
+.barcode-controls textarea {
+  resize: vertical;
+  margin-bottom: 12px;
+}
+
+.barcode-project-title-label {
+  padding-top: 10px;
+  padding-bottom: 5px;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  font-style: bold !important;
+  line-height:37.5px !important;
+  color: #0f172a !important;
+}
+
+.barcode-group-heading{
+  padding-top: 30px;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  font-style: bold !important;
+  line-height:37.5px !important;
+  color: #0f172a !important;
+}
+
+
+
+.barcode-project-title-label-input {
+  margin-bottom: 20px;
+}
+
+
+.barcode-grid {
+  display: grid;
+  row-gap: 12px;
+  column-gap: 26px;
+  margin-bottom: 25px;
+}
+
+.barcode-grid-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.barcode-grid-four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.barcode-checkbox-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.barcode-checkbox-wrap input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #0076c9;
+}
+
+.barcode-controls input[type="color"] {
+  height: 44px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.barcode-error {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #b42318;
+}
+
+.barcode-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 120px;
+}
+
+.barcode-phone-shell {
+  position: relative;
+  width: 100%;
+  max-width: 598px;
+  margin: 0 auto;
+}
+
+.barcode-phone-bg {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.barcode-phone-screen {
+  position: absolute;
+  left: 30%;
+  top: 8.6%;
+  width: 40%;
+  height: 88.2%;
+  border-radius: 26px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 16px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.barcode-preview-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.barcode-placeholder {
+  font-size: 13px;
+  text-align: center;
+  color: #8a93a7;
+}
+
+.barcode-actions {
+  display: grid;
+  grid-template-columns: 130px 110px;
+  gap: 10px;
+  justify-content: center;
+}
+
+.barcode-btn {
+  height: 38px;
+  border-radius: 5px;
+  border: 0;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.barcode-btn-primary {
+  background: #0076c9;
+  color: #ffffff;
+}
+
+.barcode-btn-secondary {
+  background: #ffffff;
+  color: #0076c9;
+  border: 1px solid rgba(0, 118, 201, 1);
+}
+
+.barcode-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1200px) {
+  .barcode-grid-four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1080px) {
+  .barcode-builder {
+    grid-template-columns: 1fr;
+  }
+
+  .barcode-preview {
+    position: static;
+    top: auto;
+  }
+
+  .barcode-phone-shell {
+    max-width: 494px;
+  }
+}

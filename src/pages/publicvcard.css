@@ -1,0 +1,211 @@
+.public-vcard-page {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: block;
+  background: #f8fafc;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #0f172a;
+}
+
+.public-vcard-card {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.public-vcard-hero {
+  padding: 48px 20px 36px;
+  background: var(--accent, #5d83d9);
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+}
+
+.public-vcard-hero h1 {
+  margin: 0;
+  font-size: 40px;
+  line-height: 1.1;
+  letter-spacing: 0.2px;
+}
+
+.public-vcard-hero p {
+  margin: 8px 0 0;
+  opacity: 0.95;
+  font-size: 18px;
+}
+
+.public-vcard-quick-actions {
+  margin-top: 26px;
+  display: inline-flex;
+  gap: 18px;
+}
+
+.quick-action {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #6b7da6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.14);
+  text-decoration: none;
+}
+
+.quick-action svg {
+  width: 24px;
+  height: 24px;
+}
+
+.public-vcard-main {
+  padding: 20px 16px 22px;
+}
+
+.public-vcard-tagline {
+  margin: 0 0 18px;
+  text-align: center;
+  font-size: 20px;
+  color: #6b7280;
+}
+
+.public-vcard-info-list {
+  background: #fcfcfd;
+  border: 1px solid #edf1f6;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 14px 14px;
+}
+
+.info-row + .info-row {
+  border-top: 1px solid #edf1f6;
+}
+
+.info-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #f3f5f7;
+  color: #7b8794;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.info-text small {
+  display: block;
+  margin: 2px 0 4px;
+  font-size: 13px;
+  color: #8b95a1;
+}
+
+.info-text a,
+.info-text p {
+  margin: 0;
+  text-decoration: none;
+  color: #111827;
+  font-size: 19px;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.public-vcard-main h2 {
+  margin: 22px 2px 10px;
+  font-size: 24px;
+  line-height: 1.1;
+  color: #1f2937;
+  font-weight: 400;
+}
+
+.public-vcard-socials {
+  margin-top: 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.social-row {
+  width: 100%;
+  border: 1px solid #edf1f6;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+.social-row span {
+  font-size: 23px;
+  color: #111827;
+}
+
+.social-row strong {
+  font-size: 28px;
+  color: #6b7280;
+}
+
+.public-vcard-cta {
+  margin-top: 14px;
+  width: 100%;
+  height: 62px;
+  border-radius: 10px;
+  background: #5c83cf;
+  margin: 0;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.2px;
+}
+
+@media (max-width: 520px) {
+  .public-vcard-hero h1 {
+    font-size: 28px;
+  }
+
+  .public-vcard-hero p {
+    font-size: 16px;
+  }
+
+  .public-vcard-tagline {
+    font-size: 16px;
+  }
+
+  .info-text a,
+  .info-text p {
+    font-size: 14px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .social-row span {
+    font-size: 18px;
+  }
+
+  .public-vcard-cta {
+    height: 52px;
+    font-size: 20px;
+  }
+}
