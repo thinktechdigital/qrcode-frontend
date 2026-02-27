@@ -2,8 +2,8 @@ import "./login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import email from "../assets/vector.png";
-import password from "../assets/vector (1).png";
+import email from "../assets/Vector.png";
+import password from "../assets/Vector (1).png";
 import signin from "../assets/signin.png";
 
 
