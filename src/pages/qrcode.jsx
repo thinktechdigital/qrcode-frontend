@@ -128,6 +128,7 @@ const buildDownloadName = (projectTitle, fallbackBase, extension) => {
 const Qrcode = () => {
   const navigate = useNavigate();
   const apiBaseUrl = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+  const publicAppBaseUrl = (import.meta.env.VITE_PUBLIC_APP_URL || window.location.origin || "").replace(/\/$/, "");
   const [form, setForm] = useState({
     project_title: "",
     content_type: "url",
@@ -365,9 +366,9 @@ const Qrcode = () => {
           setSavedVcardId(vcardData.id);
           setSavedVcardSlug(vcardData.slug);
           setHasUnsavedVCardChanges(false);
-          qrContent = `${window.location.origin}/c/${vcardData.slug}`;
+          qrContent = `${publicAppBaseUrl}/c/${vcardData.slug}`;
         } else {
-          qrContent = `${window.location.origin}/c/${savedVcardSlug}`;
+          qrContent = `${publicAppBaseUrl}/c/${savedVcardSlug}`;
         }
       }
       if (form.content_type === "pdf") {
@@ -409,9 +410,9 @@ const Qrcode = () => {
           setSavedPdfSlug(pdfData.slug);
           setHasUnsavedPdfChanges(false);
           setSelectedPdfFile(null);
-          qrContent = `${window.location.origin}/p/${pdfData.slug}`;
+          qrContent = `${publicAppBaseUrl}/p/${pdfData.slug}`;
         } else {
-          qrContent = `${window.location.origin}/p/${savedPdfSlug}`;
+          qrContent = `${publicAppBaseUrl}/p/${savedPdfSlug}`;
         }
       }
 
