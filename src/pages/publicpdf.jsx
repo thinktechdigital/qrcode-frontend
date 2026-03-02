@@ -3,6 +3,14 @@ import { useParams } from "react-router-dom";
 import "./publicpdf.css";
 import pdfPreviewImage from "../assets/pdf.png";
 
+const toAbsoluteUrl = (value) => {
+  const raw = (value || "").trim();
+  if (!raw) return "";
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(raw)) return raw;
+  if (raw.startsWith("//")) return `https:${raw}`;
+  return `https://${raw}`;
+};
+
 const PublicPdf = () => {
   const { slug = "" } = useParams();
   const apiBaseUrl = useMemo(() => (import.meta.env.VITE_API_URL || "").replace(/\/$/, ""), []);
@@ -73,7 +81,7 @@ const PublicPdf = () => {
             {item.button_label || "View PDF"}
           </a>
           {item.website_url ? (
-            <a href={item.website_url} target="_blank" rel="noreferrer" className="public-pdf-website">
+            <a href={toAbsoluteUrl(item.website_url)} target="_blank" rel="noreferrer" className="public-pdf-website">
               {item.website_url}
             </a>
           ) : null}

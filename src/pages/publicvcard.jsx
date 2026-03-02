@@ -32,6 +32,14 @@ const IconWork = () => (
   </svg>
 );
 
+const toAbsoluteUrl = (value) => {
+  const raw = (value || "").trim();
+  if (!raw) return "";
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(raw)) return raw;
+  if (raw.startsWith("//")) return `https:${raw}`;
+  return `https://${raw}`;
+};
+
 const PublicVCard = () => {
   const { slug = "" } = useParams();
   const apiBaseUrl = useMemo(() => (import.meta.env.VITE_API_URL || "").replace(/\/$/, ""), []);
@@ -72,10 +80,10 @@ const PublicVCard = () => {
 
   const location = [card.city, card.state, card.country].filter(Boolean).join(", ");
   const socials = [
-    { key: "linkedin", label: "LinkedIn", url: card.linkedin },
-    { key: "twitter", label: "X", url: card.twitter },
-    { key: "instagram", label: "Instagram", url: card.instagram },
-    { key: "whatsapp", label: "WhatsApp", url: card.whatsapp },
+    { key: "linkedin", label: "LinkedIn", url: toAbsoluteUrl(card.linkedin) },
+    { key: "twitter", label: "X", url: toAbsoluteUrl(card.twitter) },
+    { key: "instagram", label: "Instagram", url: toAbsoluteUrl(card.instagram) },
+    { key: "whatsapp", label: "WhatsApp", url: toAbsoluteUrl(card.whatsapp) },
   ].filter((item) => item.url);
 
   return (
@@ -116,7 +124,7 @@ const PublicVCard = () => {
                 <span className="info-icon"><IconWeb /></span>
                 <div className="info-text">
                   <small>My Website</small>
-                  <a href={card.website} target="_blank" rel="noreferrer">{card.website}</a>
+                  <a href={toAbsoluteUrl(card.website)} target="_blank" rel="noreferrer">{card.website}</a>
                 </div>
               </div>
             ) : null}
