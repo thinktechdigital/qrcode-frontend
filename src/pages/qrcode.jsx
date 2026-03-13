@@ -125,6 +125,81 @@ const buildDownloadName = (projectTitle, fallbackBase, extension) => {
   return `${safeBase}.${extension}`;
 };
 
+const QR_DRAFT_STORAGE_KEY = "qr_code_draft";
+const defaultQrForm = {
+  project_title: "",
+  content_type: "url",
+  content: "",
+  full_name: "",
+  job_title: "",
+  company: "",
+  phone: "",
+  email: "",
+  website: "",
+  address: "",
+  city: "",
+  state: "",
+  country: "",
+  linkedin: "",
+  twitter: "",
+  instagram: "",
+  whatsapp: "",
+  theme_color: "#0076c9",
+  pdf_title: "",
+  pdf_description: "",
+  pdf_company_name: "",
+  pdf_website_url: "",
+  pdf_button_label: "Open PDF",
+  pdf_theme_color: "#58c2db",
+  pdf_file_url: "",
+  file_format: "png",
+  scale: 5,
+  border: 1,
+  dark_color: "#000000",
+  light_color: "#ffffff",
+};
+const defaultQrSectionsOpen = {
+  projectTitle: false,
+  content: false,
+  design: false,
+  personalInfo: false,
+  contactDetails: false,
+  location: false,
+  downloadFormat: false,
+  style: false,
+};
+
+const loadQrDraft = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const rawDraft = window.sessionStorage.getItem(QR_DRAFT_STORAGE_KEY);
+  if (!rawDraft) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(rawDraft);
+    return {
+      form: { ...defaultQrForm, ...(parsed.form || {}) },
+      contactPreviewMode: parsed.contactPreviewMode === "qr" ? "qr" : "vcard",
+      pdfPreviewMode: parsed.pdfPreviewMode === "qr" ? "qr" : "preview",
+      savedVcardId: typeof parsed.savedVcardId === "number" ? parsed.savedVcardId : null,
+      savedVcardSlug: typeof parsed.savedVcardSlug === "string" ? parsed.savedVcardSlug : "",
+      hasUnsavedVCardChanges: Boolean(parsed.hasUnsavedVCardChanges),
+      savedPdfLinkId: typeof parsed.savedPdfLinkId === "number" ? parsed.savedPdfLinkId : null,
+      savedPdfSlug: typeof parsed.savedPdfSlug === "string" ? parsed.savedPdfSlug : "",
+      hasUnsavedPdfChanges: Boolean(parsed.hasUnsavedPdfChanges),
+      downloadName: typeof parsed.downloadName === "string" && parsed.downloadName ? parsed.downloadName : "qrcode.png",
+      sectionsOpen: { ...defaultQrSectionsOpen, ...(parsed.sectionsOpen || {}) },
+    };
+  } catch {
+    window.sessionStorage.removeItem(QR_DRAFT_STORAGE_KEY);
+    return null;
+  }
+};
+
 const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
 const getApiErrorMessage = (detail, fallbackMessage) => {
@@ -153,64 +228,25 @@ const Qrcode = () => {
   const navigate = useNavigate();
   const apiBaseUrl = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
   const publicAppBaseUrl = (import.meta.env.VITE_PUBLIC_APP_URL || window.location.origin || "").replace(/\/$/, "");
-  const [form, setForm] = useState({
-    project_title: "",
-    content_type: "url",
-    content: "",
-    full_name: "",
-    job_title: "",
-    company: "",
-    phone: "",
-    email: "",
-    website: "",
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    linkedin: "",
-    twitter: "",
-    instagram: "",
-    whatsapp: "",
-    theme_color: "#0076c9",
-    pdf_title: "",
-    pdf_description: "",
-    pdf_company_name: "",
-    pdf_website_url: "",
-    pdf_button_label: "Open PDF",
-    pdf_theme_color: "#58c2db",
-    pdf_file_url: "",
-    file_format: "png",
-    scale: 5,
-    border: 1,
-    dark_color: "#000000",
-    light_color: "#ffffff",
-  });
+  const qrDraft = loadQrDraft();
+  const [form, setForm] = useState(() => qrDraft?.form || defaultQrForm);
   const [isCreating, setIsCreating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isSavingPdf, setIsSavingPdf] = useState(false);
   const [error, setError] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
-  const [contactPreviewMode, setContactPreviewMode] = useState("vcard");
-  const [pdfPreviewMode, setPdfPreviewMode] = useState("preview");
-  const [savedVcardId, setSavedVcardId] = useState(null);
-  const [savedVcardSlug, setSavedVcardSlug] = useState("");
-  const [hasUnsavedVCardChanges, setHasUnsavedVCardChanges] = useState(false);
-  const [savedPdfLinkId, setSavedPdfLinkId] = useState(null);
-  const [savedPdfSlug, setSavedPdfSlug] = useState("");
-  const [hasUnsavedPdfChanges, setHasUnsavedPdfChanges] = useState(false);
+  const [contactPreviewMode, setContactPreviewMode] = useState(() => qrDraft?.contactPreviewMode || "vcard");
+  const [pdfPreviewMode, setPdfPreviewMode] = useState(() => qrDraft?.pdfPreviewMode || "preview");
+  const [savedVcardId, setSavedVcardId] = useState(() => qrDraft?.savedVcardId ?? null);
+  const [savedVcardSlug, setSavedVcardSlug] = useState(() => qrDraft?.savedVcardSlug || "");
+  const [hasUnsavedVCardChanges, setHasUnsavedVCardChanges] = useState(() => qrDraft?.hasUnsavedVCardChanges || false);
+  const [savedPdfLinkId, setSavedPdfLinkId] = useState(() => qrDraft?.savedPdfLinkId ?? null);
+  const [savedPdfSlug, setSavedPdfSlug] = useState(() => qrDraft?.savedPdfSlug || "");
+  const [hasUnsavedPdfChanges, setHasUnsavedPdfChanges] = useState(() => qrDraft?.hasUnsavedPdfChanges || false);
   const [selectedPdfFile, setSelectedPdfFile] = useState(null);
   const phoneScreenRef = useRef(null);
-  const [downloadName, setDownloadName] = useState("qrcode.png");
-  const [sectionsOpen, setSectionsOpen] = useState({
-    projectTitle: false,
-    content: false,
-    design: false,
-    personalInfo: false,
-    contactDetails: false,
-    location: false,
-    downloadFormat: false,
-    style: false,
-  });
+  const [downloadName, setDownloadName] = useState(() => qrDraft?.downloadName || "qrcode.png");
+  const [sectionsOpen, setSectionsOpen] = useState(() => qrDraft?.sectionsOpen || defaultQrSectionsOpen);
 
   const token = useMemo(
     () => window.localStorage.getItem("access_token") || window.sessionStorage.getItem("access_token") || "",
@@ -258,6 +294,37 @@ const Qrcode = () => {
       }
     };
   }, [previewUrl]);
+
+  useEffect(() => {
+    window.sessionStorage.setItem(
+      QR_DRAFT_STORAGE_KEY,
+      JSON.stringify({
+        form,
+        contactPreviewMode,
+        pdfPreviewMode,
+        savedVcardId,
+        savedVcardSlug,
+        hasUnsavedVCardChanges,
+        savedPdfLinkId,
+        savedPdfSlug,
+        hasUnsavedPdfChanges,
+        downloadName,
+        sectionsOpen,
+      }),
+    );
+  }, [
+    contactPreviewMode,
+    downloadName,
+    form,
+    hasUnsavedPdfChanges,
+    hasUnsavedVCardChanges,
+    pdfPreviewMode,
+    savedPdfLinkId,
+    savedPdfSlug,
+    savedVcardId,
+    savedVcardSlug,
+    sectionsOpen,
+  ]);
 
   useEffect(() => {
     if (form.content_type === "contact_card" && phoneScreenRef.current) {

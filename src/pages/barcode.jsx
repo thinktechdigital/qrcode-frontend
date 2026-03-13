@@ -9,28 +9,54 @@ const buildDownloadName = (projectTitle, fallbackBase, extension) => {
   return `${safeBase}.${extension}`;
 };
 
+const BARCODE_DRAFT_STORAGE_KEY = "barcode_draft";
+const defaultBarcodeForm = {
+  project_title: "",
+  content: "",
+  barcode_type: "code128",
+  file_format: "png",
+  module_width: 0.2,
+  module_height: 15,
+  quiet_zone: 6.5,
+  font_size: 10,
+  text_distance: 5,
+  write_text: true,
+  foreground: "#000000",
+  background: "#ffffff",
+};
+
+const loadBarcodeDraft = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const rawDraft = window.sessionStorage.getItem(BARCODE_DRAFT_STORAGE_KEY);
+  if (!rawDraft) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(rawDraft);
+    return {
+      form: { ...defaultBarcodeForm, ...(parsed.form || {}) },
+      downloadName: typeof parsed.downloadName === "string" && parsed.downloadName ? parsed.downloadName : "barcode.png",
+    };
+  } catch {
+    window.sessionStorage.removeItem(BARCODE_DRAFT_STORAGE_KEY);
+    return null;
+  }
+};
+
 const Barcode = () => {
   const navigate = useNavigate();
   const apiBaseUrl = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+  const barcodeDraft = loadBarcodeDraft();
   const [types, setTypes] = useState(["code128"]);
-  const [form, setForm] = useState({
-    project_title: "",
-    content: "",
-    barcode_type: "code128",
-    file_format: "png",
-    module_width: 0.2,
-    module_height: 15,
-    quiet_zone: 6.5,
-    font_size: 10,
-    text_distance: 5,
-    write_text: true,
-    foreground: "#000000",
-    background: "#ffffff",
-  });
+  const [form, setForm] = useState(() => barcodeDraft?.form || defaultBarcodeForm);
   const [isCreating, setIsCreating] = useState(false);
   const [error, setError] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
-  const [downloadName, setDownloadName] = useState("barcode.png");
+  const [downloadName, setDownloadName] = useState(() => barcodeDraft?.downloadName || "barcode.png");
 
   const token = useMemo(
     () => window.localStorage.getItem("access_token") || window.sessionStorage.getItem("access_token") || "",
@@ -66,6 +92,16 @@ const Barcode = () => {
       }
     };
   }, [previewUrl]);
+
+  useEffect(() => {
+    window.sessionStorage.setItem(
+      BARCODE_DRAFT_STORAGE_KEY,
+      JSON.stringify({
+        form,
+        downloadName,
+      }),
+    );
+  }, [downloadName, form]);
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
