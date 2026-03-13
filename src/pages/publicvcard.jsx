@@ -82,6 +82,7 @@ const PublicVCard = () => {
   const socials = [
     { key: "linkedin", label: "LinkedIn", url: toAbsoluteUrl(card.linkedin) },
     { key: "twitter", label: "X", url: toAbsoluteUrl(card.twitter) },
+    { key: "facebook", label: "Facebook", url: toAbsoluteUrl(card.facebook) },
     { key: "instagram", label: "Instagram", url: toAbsoluteUrl(card.instagram) },
     { key: "whatsapp", label: "WhatsApp", url: toAbsoluteUrl(card.whatsapp) },
   ].filter((item) => item.url);

@@ -142,6 +142,7 @@ const defaultQrForm = {
   country: "",
   linkedin: "",
   twitter: "",
+  facebook: "",
   instagram: "",
   whatsapp: "",
   theme_color: "#0076c9",
@@ -267,6 +268,7 @@ const Qrcode = () => {
       "country",
       "linkedin",
       "twitter",
+      "facebook",
       "instagram",
       "whatsapp",
       "theme_color",
@@ -440,6 +442,7 @@ const Qrcode = () => {
               country: form.country.trim(),
               linkedin: form.linkedin.trim(),
               twitter: form.twitter.trim(),
+              facebook: form.facebook.trim(),
               instagram: form.instagram.trim(),
               whatsapp: form.whatsapp.trim(),
               theme_color: form.theme_color,
@@ -650,6 +653,7 @@ const Qrcode = () => {
           country: form.country.trim(),
           linkedin: form.linkedin.trim(),
           twitter: form.twitter.trim(),
+          facebook: form.facebook.trim(),
           instagram: form.instagram.trim(),
           whatsapp: form.whatsapp.trim(),
           theme_color: form.theme_color,
@@ -961,6 +965,10 @@ const Qrcode = () => {
                               <input id="twitter" name="twitter" type="url" value={form.twitter} onChange={handleChange} placeholder="https://x.com/username" />
                             </div>
                             <div>
+                              <label htmlFor="facebook">Facebook</label>
+                              <input id="facebook" name="facebook" type="url" value={form.facebook} onChange={handleChange} placeholder="https://facebook.com/username" />
+                            </div>
+                            <div>
                               <label htmlFor="instagram">Instagram</label>
                               <input id="instagram" name="instagram" type="url" value={form.instagram} onChange={handleChange} placeholder="https://instagram.com/username" />
                             </div>
@@ -1187,7 +1195,7 @@ const Qrcode = () => {
                       ) : null}
                     </div>
 
-                    {(form.linkedin || form.twitter || form.instagram || form.whatsapp) ? (
+                    {(form.linkedin || form.twitter || form.facebook || form.instagram || form.whatsapp) ? (
                       <>
                         <h2>Find me on</h2>
                         <div className="public-vcard-socials">
@@ -1200,6 +1208,12 @@ const Qrcode = () => {
                           {form.twitter ? (
                             <div className="social-row">
                               <span>X</span>
+                              <strong>&rarr;</strong>
+                            </div>
+                          ) : null}
+                          {form.facebook ? (
+                            <div className="social-row">
+                              <span>Facebook</span>
                               <strong>&rarr;</strong>
                             </div>
                           ) : null}
