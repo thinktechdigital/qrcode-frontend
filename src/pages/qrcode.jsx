@@ -125,6 +125,30 @@ const buildDownloadName = (projectTitle, fallbackBase, extension) => {
   return `${safeBase}.${extension}`;
 };
 
+const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+const getApiErrorMessage = (detail, fallbackMessage) => {
+  if (Array.isArray(detail) && detail.length) {
+    return detail
+      .map((item) => {
+        if (!item || typeof item !== "object") {
+          return "";
+        }
+        const location = Array.isArray(item.loc) ? item.loc.slice(1).join(" > ") : "";
+        const message = typeof item.msg === "string" ? item.msg : "Invalid value.";
+        return location ? `${location}: ${message}` : message;
+      })
+      .filter(Boolean)
+      .join(" ");
+  }
+
+  if (typeof detail === "string" && detail.trim()) {
+    return detail;
+  }
+
+  return fallbackMessage;
+};
+
 const Qrcode = () => {
   const navigate = useNavigate();
   const apiBaseUrl = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
@@ -289,6 +313,8 @@ const Qrcode = () => {
   };
 
   const generateQr = async () => {
+    const trimmedEmail = form.email.trim();
+
     if (!apiBaseUrl) {
       setError("Missing VITE_API_URL in Frontend/.env.");
       return;
@@ -303,6 +329,10 @@ const Qrcode = () => {
     }
     if (form.content_type === "contact_card" && !form.full_name.trim()) {
       setError("Full Name is required for contact card.");
+      return;
+    }
+    if (form.content_type === "contact_card" && trimmedEmail && !isValidEmail(trimmedEmail)) {
+      setError("Enter a valid email address for the contact card.");
       return;
     }
     if (form.content_type === "pdf" && !form.pdf_title.trim()) {
@@ -330,15 +360,15 @@ const Qrcode = () => {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({
-              full_name: form.full_name.trim(),
-              job_title: form.job_title.trim(),
-              company: form.company.trim(),
-              phone: form.phone.trim(),
-              email: form.email.trim() || null,
-              website: form.website.trim(),
-              address: form.address.trim(),
-              city: form.city.trim(),
+              body: JSON.stringify({
+                full_name: form.full_name.trim(),
+                job_title: form.job_title.trim(),
+                company: form.company.trim(),
+                phone: form.phone.trim(),
+                email: trimmedEmail || null,
+                website: form.website.trim(),
+                address: form.address.trim(),
+                city: form.city.trim(),
               state: form.state.trim(),
               country: form.country.trim(),
               linkedin: form.linkedin.trim(),
@@ -360,7 +390,7 @@ const Qrcode = () => {
           }
           if (!vcardResponse.ok) {
             const vcardError = await vcardResponse.json().catch(() => ({}));
-            throw new Error(vcardError.detail || "Contact card creation failed.");
+            throw new Error(getApiErrorMessage(vcardError.detail, "Contact card creation failed."));
           }
           const vcardData = await vcardResponse.json();
           setSavedVcardId(vcardData.id);
@@ -508,6 +538,8 @@ const Qrcode = () => {
   };
 
   const handleSaveVCard = async () => {
+    const trimmedEmail = form.email.trim();
+
     if (!savedVcardId) {
       setError("Create QR Code first so we can save updates to that card.");
       return;
@@ -522,6 +554,10 @@ const Qrcode = () => {
     }
     if (!form.full_name.trim()) {
       setError("Full Name is required for contact card.");
+      return;
+    }
+    if (trimmedEmail && !isValidEmail(trimmedEmail)) {
+      setError("Enter a valid email address for the contact card.");
       return;
     }
 
@@ -539,7 +575,7 @@ const Qrcode = () => {
           job_title: form.job_title.trim(),
           company: form.company.trim(),
           phone: form.phone.trim(),
-          email: form.email.trim() || null,
+          email: trimmedEmail || null,
           website: form.website.trim(),
           address: form.address.trim(),
           city: form.city.trim(),
@@ -566,7 +602,7 @@ const Qrcode = () => {
 
       if (!response.ok) {
         const apiError = await response.json().catch(() => ({}));
-        throw new Error(apiError.detail || "Could not save contact card updates.");
+        throw new Error(getApiErrorMessage(apiError.detail, "Could not save contact card updates."));
       }
 
       const updated = await response.json();
