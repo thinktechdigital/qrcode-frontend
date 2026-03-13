@@ -581,6 +581,27 @@ const Qrcode = () => {
     document.body.removeChild(link);
   };
 
+  const handleClearDraft = () => {
+    window.sessionStorage.removeItem(QR_DRAFT_STORAGE_KEY);
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setForm(defaultQrForm);
+    setError("");
+    setPreviewUrl("");
+    setContactPreviewMode("vcard");
+    setPdfPreviewMode("preview");
+    setSavedVcardId(null);
+    setSavedVcardSlug("");
+    setHasUnsavedVCardChanges(false);
+    setSavedPdfLinkId(null);
+    setSavedPdfSlug("");
+    setHasUnsavedPdfChanges(false);
+    setSelectedPdfFile(null);
+    setDownloadName("qrcode.png");
+    setSectionsOpen(defaultQrSectionsOpen);
+  };
+
   const handleShowVCardPreview = () => {
     setContactPreviewMode("vcard");
   };
@@ -1299,6 +1320,9 @@ const Qrcode = () => {
               >
                 <ActionIcon type="download" />
               </button>
+              <button type="button" className="btn btn-secondary btn-clear-draft" onClick={handleClearDraft}>
+                Clear
+              </button>
             </div>
           ) : form.content_type === "pdf" ? (
             <div className="qr-actions qr-icon-actions">
@@ -1314,14 +1338,20 @@ const Qrcode = () => {
               <button type="button" className="btn btn-secondary btn-icon" onClick={handleDownload} disabled={!previewUrl} aria-label="Download" title="Download">
                 <ActionIcon type="download" />
               </button>
+              <button type="button" className="btn btn-secondary btn-clear-draft" onClick={handleClearDraft}>
+                Clear
+              </button>
             </div>
           ) : (
-            <div className="qr-actions">
+            <div className="qr-actions qr-actions-three">
               <button type="button" className="btn btn-primary" onClick={generateQr} disabled={isCreating}>
                 {isCreating ? "Creating..." : "Create QR Code"}
               </button>
               <button type="button" className="btn btn-secondary" onClick={handleDownload} disabled={!previewUrl}>
                 Download
+              </button>
+              <button type="button" className="btn btn-secondary" onClick={handleClearDraft}>
+                Clear Draft
               </button>
             </div>
           )}

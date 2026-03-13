@@ -200,6 +200,17 @@ const Barcode = () => {
     document.body.removeChild(link);
   };
 
+  const handleClearDraft = () => {
+    window.sessionStorage.removeItem(BARCODE_DRAFT_STORAGE_KEY);
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setForm(defaultBarcodeForm);
+    setPreviewUrl("");
+    setDownloadName("barcode.png");
+    setError("");
+  };
+
   return (
     <section className="barcode-page">
       <div className="barcode-builder">
@@ -310,6 +321,9 @@ const Barcode = () => {
             </button>
             <button type="button" className="barcode-btn barcode-btn-secondary" onClick={handleDownload} disabled={!previewUrl}>
               Download
+            </button>
+            <button type="button" className="barcode-btn barcode-btn-secondary" onClick={handleClearDraft}>
+              Clear Draft
             </button>
           </div>
         </div>

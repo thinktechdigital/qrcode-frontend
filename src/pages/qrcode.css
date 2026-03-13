@@ -389,8 +389,12 @@
 }
 
 .qr-icon-actions {
-  grid-template-columns: repeat(4, 44px);
+  grid-template-columns: repeat(4, 44px) auto;
   gap: 10px;
+}
+
+.btn-clear-draft {
+  padding: 0 14px;
 }
 
 .btn {

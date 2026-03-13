@@ -198,7 +198,7 @@
 
 .barcode-actions {
   display: grid;
-  grid-template-columns: 130px 110px;
+  grid-template-columns: 130px 110px 110px;
   gap: 10px;
   justify-content: center;
 }
